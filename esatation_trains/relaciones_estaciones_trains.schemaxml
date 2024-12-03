@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">metro_cdmx</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="lines" view="colnames">
+<left>248</left>
+<top>22</top>
+<width>110</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `lines` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL,
+  `color` varchar(15) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatad_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="lines_stations" view="colnames">
+<left>113</left>
+<top>145</top>
+<width>110</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `lines_stations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `line_id` bigint(20) unsigned NOT NULL,
+  `station_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `lines_stations_line_id_foreign` (`line_id`),
+  KEY `lines_stations_station_id_foreign` (`station_id`),
+  CONSTRAINT `lines_stations_line_id_foreign` FOREIGN KEY (`line_id`) REFERENCES `lines` (`id`),
+  CONSTRAINT `lines_stations_station_id_foreign` FOREIGN KEY (`station_id`) REFERENCES `stations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1818 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="locations" view="colnames">
+<left>458</left>
+<top>327</top>
+<width>110</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `locations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `station_id` bigint(20) unsigned NOT NULL,
+  `location` point NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `locations_station_id_foreign` (`station_id`),
+  CONSTRAINT `locations_station_id_foreign` FOREIGN KEY (`station_id`) REFERENCES `stations` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="stations" view="colnames">
+<left>248</left>
+<top>346</top>
+<width>110</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `stations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="trains" view="colnames">
+<left>500</left>
+<top>5</top>
+<width>128</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `trains` (
+  `serial_number` varchar(10) NOT NULL,
+  `line_id` bigint(20) unsigned NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `year` int(4) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`serial_number`),
+  KEY `trains_line_id_foregin` (`line_id`),
+  CONSTRAINT `trains_line_id_foregin` FOREIGN KEY (`line_id`) REFERENCES `lines` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

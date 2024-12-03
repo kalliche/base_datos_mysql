@@ -62,6 +62,8 @@ INSERT INTO `stations_delete` (`name`) VALUES
 -- Modo TRUNCATE
 -- Un TRUNCATE TABLE si resetea los autoincrement
 TRUNCATE TABLE `stations_delete`;
+TRUNCATE TABLE `lines_stations`;
+TRUNCATE TABLE `locations`;
 
 INSERT INTO `stations_delete` (`name`) VALUES
 ("Lázaro Cárdens"), 
