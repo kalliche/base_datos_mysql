@@ -84,9 +84,9 @@ SELECT * FROM lines_stations;
 
 -- Creacion de la tabla de locations
 CREATE TABLE `locations` (
-	`id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
+	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 	
-	`station_id` bigint(20) unsigned NOT NULL,
+	`station_id` BIGINT(20) UNSIGNED NOT NULL,
 	`location` POINT NOT NULL,
 	
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -94,11 +94,47 @@ CREATE TABLE `locations` (
 	
 	PRIMARY KEY (id),
 	CONSTRAINT `locations_station_id_foreign`
-	FOREIGN KEY (`station_id`) references `stations` (`id`)
+	FOREIGN KEY (`station_id`) REFERENCES `stations` (`id`)
 )
 DEFAULT CHARSET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
+
+-- Creacion de tablas de drivers
+CREATE TABLE `drivers` (
+	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(20),
+	`status` BOOLEAN NOT NULL DEFAULT FALSE, 
+	
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	PRIMARY KEY (id)
+)
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
+
+INSERT INTO `drivers` (NAME) VALUES
+("Pedro"),
+("Pablo"),
+("José"),
+("María"),
+("Amanda");
+
+SELECT * FROM drivers;
+
+-- Creacion de la tabla active_drivers
+CREATE TABLE `active_drivers` (
+	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`driver_id` BIGINT(20) UNSIGNED NOT NULL,
+	
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	PRIMARY KEY (id)
+)
+DEFAULT CHARSET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 -- Modificar una tabla stations
 ALTER TABLE `stations`
@@ -112,11 +148,3 @@ TRUNCATE TABLE `trains`;
 
 DELETE FROM `lines`;
 ALTER TABLE `lines` AUTO_INCREMENT = 1;
-
-
-
-
-
-
-
-
