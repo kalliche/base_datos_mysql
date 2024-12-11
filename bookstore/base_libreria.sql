@@ -37,3 +37,34 @@ CREATE TABLE IF NOT EXISTS authors (
 DESCRIBE authors;
 DESC authors;
 
+-- descripcion de todos las filas
+SHOW FULL COLUMNS FROM books;
+
+CREATE TABLE IF NOT EXISTS clients (
+	client_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
+	birthdate DATETIME, -- recomendable para fechas de cumpleaños
+	gender ENUM('M', 'F', 'ND') NOT NULL, -- Campo para escoger en tres opciones
+	active TINYINT(1) NOT NULL DEFAULT 1, -- Se recomienda noo eliminar registros
+	
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+DESCRIBE clients;
+DESC clients;
+
+CREATE TABLE IF NOT EXISTS operations(
+	operation_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	book_id INTEGER UNSIGNED,
+	client_id INTEGER UNSIGNED,
+	status ENUM('P', 'D', 'V') NOT NULL COMMENT 'P: prestado, D: devuelto, V: vendido',
+	
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	finshed TINYINT(1) NOT NULL
+);
+
+
+
